@@ -46,7 +46,7 @@ async function transcribeWithWhisper(videoPath) {
         console.error('Erro ao converter vídeo em áudio mono:', ffmpegStdErr);
         return reject(new Error('Falha no FFmpeg ao extrair áudio'));
       }
-  
+
       const subprocess = spawn(pythonPath, [scriptPath, audioMonoPath], {
         env: {
           ...process.env,
@@ -74,14 +74,14 @@ async function transcribeWithWhisper(videoPath) {
               let start = null;
               let end = null;
               let totalTime = 0;
-            
+
               for (let i = 0; i < segments.length; i++) {
                 const seg = segments[i];
                 if (start === null) start = seg.start;
-            
+
                 buffer += (buffer ? ' ' : '') + seg.text;
                 end = seg.end;
-            
+
                 // Se o texto terminar com ponto final, adiciona o bloco
                 if (seg.text.trim().endsWith('.')) {
                   blocos.push({ start, end, text: buffer.trim() });
@@ -91,7 +91,7 @@ async function transcribeWithWhisper(videoPath) {
                   end = null;
                 }
               }
-            
+
               // Se sobrou algo sem ponto final, adiciona como último bloco
               if (buffer) {
                 blocos.push({ start, end, text: buffer.trim() });
