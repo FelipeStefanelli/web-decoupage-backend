@@ -10,18 +10,18 @@ router.get('/', async (req, res) => {
   const { query, page = 1, per_page = 9 } = req.query;
 
   if (!query) {
-    console.warn('⚠️ Requisição sem query.');
+    console.warn('Requisição sem query.');
     return res.status(400).json({ error: 'Query obrigatória' });
   }
 
   console.warn('PEXELS_API_KEY', PEXELS_API_KEY);
   console.warn('PIXABAY_API_KEY', PIXABAY_API_KEY);
   if (!PEXELS_API_KEY || !PIXABAY_API_KEY) {
-    console.error('❌ API keys ausentes.');
+    console.error('API keys ausentes.');
     return res.status(500).json({ error: 'Chaves de API não configuradas.' });
   }
 
-  console.log(`🔍 Buscando por "${query}" | Página: ${page} | Itens por página: ${per_page}`);
+  console.log(`Buscando por "${query}" | Página: ${page} | Itens por página: ${per_page}`);
 
   try {
     // 🔹 Requisição Pexels
@@ -38,9 +38,9 @@ router.get('/', async (req, res) => {
         source: 'Pexels'
       }));
 
-      console.log(`✅ Pexels retornou ${pexelsPhotos.length} imagens.`);
+      console.log(`Pexels retornou ${pexelsPhotos.length} imagens.`);
     } catch (pexelsErr) {
-      console.error('❌ Erro na API da Pexels:', pexelsErr.response?.data || pexelsErr.message);
+      console.error('Erro na API da Pexels:', pexelsErr.response?.data || pexelsErr.message);
     }
 
     // 🔹 Requisição Pixabay
@@ -62,17 +62,17 @@ router.get('/', async (req, res) => {
         source: 'Pixabay'
       }));
 
-      console.log(`✅ Pixabay retornou ${pixabayPhotos.length} imagens.`);
+      console.log(`Pixabay retornou ${pixabayPhotos.length} imagens.`);
     } catch (pixabayErr) {
-      console.error('❌ Erro na API da Pixabay:', pixabayErr.response?.data || pixabayErr.message);
+      console.error('Erro na API da Pixabay:', pixabayErr.response?.data || pixabayErr.message);
     }
 
     const photos = [...pexelsPhotos, ...pixabayPhotos];
 
-    console.log(`📦 Total combinado: ${photos.length} imagens.`);
+    console.log(`Total combinado: ${photos.length} imagens.`);
     return res.json({ photos });
   } catch (err) {
-    console.error('❌ Erro inesperado no servidor:', err.message);
+    console.error('Erro inesperado no servidor:', err.message);
     return res.status(500).json({ error: 'Erro ao buscar imagens' });
   }
 });

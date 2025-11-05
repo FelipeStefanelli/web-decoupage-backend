@@ -7,8 +7,8 @@ async function transcribeWithWhisper(videoPath) {
     const pythonPath = path.resolve(__dirname, '../../../resources/python-win/python.exe');
     const scriptPath = path.resolve(__dirname, '../../../resources/transcribe.py');
 
-    // 1) Primeiro, criamos um arquivo de áudio em mono (WAV) a partir do vídeo
-    //    Ex.: se o vídeo se chama "meu_video.mp4", geraremos "meu_video_mono.wav" na mesma pasta
+    // Criação de um arquivo de áudio em mono (WAV) a partir do vídeo
+    //    Ex.: se o vídeo se chama "meu_video.mp4", será gerado um "meu_video_mono.wav" na mesma pasta
     const videoDir = path.dirname(videoPath);
     const videoBase = path.basename(videoPath, path.extname(videoPath));
     const audioMonoPath = path.join(videoDir, `${videoBase}_mono.wav`);
@@ -46,8 +46,7 @@ async function transcribeWithWhisper(videoPath) {
         console.error('Erro ao converter vídeo em áudio mono:', ffmpegStdErr);
         return reject(new Error('Falha no FFmpeg ao extrair áudio'));
       }
-
-      // 2) Agora que o áudio em mono está pronto, chamamos o Python passando o arquivo de áudio
+  
       const subprocess = spawn(pythonPath, [scriptPath, audioMonoPath], {
         env: {
           ...process.env,
@@ -59,7 +58,7 @@ async function transcribeWithWhisper(videoPath) {
       let errorOutput = '';
 
       subprocess.stdout.on('data', (data) => {
-        output += data.toString(); // JSON, com acento
+        output += data.toString();
       });
 
       subprocess.stderr.on('data', (data) => {
@@ -74,7 +73,7 @@ async function transcribeWithWhisper(videoPath) {
               let buffer = '';
               let start = null;
               let end = null;
-              let totalTime = 0; // Variável para calcular o tempo total de fala
+              let totalTime = 0;
             
               for (let i = 0; i < segments.length; i++) {
                 const seg = segments[i];

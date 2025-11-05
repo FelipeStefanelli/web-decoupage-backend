@@ -6,6 +6,7 @@ const { spawn } = require('child_process');
  * @param {string} outputPath - Caminho completo do arquivo de saída (com extensão, ex: .mp3, .aac).
  * @returns {Promise<string>} - Resolve com o caminho de saída quando concluído.
  */
+
 function getFfmpegPath() {
   return process.env.FFMPEG_PATH || 'ffmpeg';
 }

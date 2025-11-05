@@ -11,6 +11,7 @@ function getFfmpegPath() {
  * @param {string} outputPath - Caminho completo de saída (incluindo extensão).
  * @returns {Promise<string>} - Resolve com o caminho de saída quando concluído.
  */
+
 function convertVideo(inputPath, outputPath) {
   return new Promise((resolve, reject) => {
     const ffmpegPath = getFfmpegPath();

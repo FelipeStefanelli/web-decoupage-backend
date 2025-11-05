@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
   if (!query) return res.status(400).json({ error: 'Query obrigatória' });
 
   try {
-    // 🔹 Pexels Videos
     const pexelsRes = await axios.get('https://api.pexels.com/videos/search', {
       headers: { Authorization: PEXELS_API_KEY },
       params: { query, page, per_page }
@@ -24,7 +23,6 @@ router.get('/', async (req, res) => {
       platform: 'Pexels'
     }));
 
-    // 🔹 Pixabay Videos
     const pixabayRes = await axios.get('https://pixabay.com/api/videos/', {
       params: {
         key: PIXABAY_API_KEY,
